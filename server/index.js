@@ -19,10 +19,10 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-app.use('/api/auth', authRoutes);
-app.use('/api/quotes', quoteRoutes);
+app.use(`${process.env.REACT_APP_API_URL}/api/auth`, authRoutes);
+app.use(`${process.env.REACT_APP_API_URL}/api/quotes`, quoteRoutes);
 
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get(`${process.env.REACT_APP_API_URL}/api/health`, (req, res) => res.json({ status: 'ok' }));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

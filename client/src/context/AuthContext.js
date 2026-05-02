@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
     const token = localStorage.getItem('token');
     if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      api.get('/api/auth/me')
+      api.get(`${process.env.REACT_APP_API_URL}/api/auth/me`)
         .then(r => setUser(r.data.user))
         .catch(() => localStorage.removeItem('token'))
         .finally(() => setLoading(false));
@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    const r = await api.post('/api/auth/login', { email, password });
+    const r = await api.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, { email, password });
     localStorage.setItem('token', r.data.token);
     api.defaults.headers.common['Authorization'] = `Bearer ${r.data.token}`;
     setUser(r.data.user);
@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (firstName, lastName, email, password) => {
-    const r = await api.post('/api/auth/register', { firstName, lastName, email, password });
+    const r = await api.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, { firstName, lastName, email, password });
     localStorage.setItem('token', r.data.token);
     api.defaults.headers.common['Authorization'] = `Bearer ${r.data.token}`;
     setUser(r.data.user);

@@ -28,7 +28,7 @@ export default function ResultsPage() {
   });
 
   useEffect(() => {
-    axios.get('/api/quotes')
+    axios.get(`${process.env.REACT_APP_API_URL}/api/quotes`)
       .then(r => { setAllQuotes(r.data.quotes); setQuotes(r.data.quotes); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
@@ -57,7 +57,7 @@ export default function ResultsPage() {
     setFiltering(true);
     setShowMobileSidebar(false);
     try {
-      const res = await axios.post('/api/quotes/filter', opts);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/quotes/filter`, opts);
       setQuotes(res.data.quotes);
       setActiveFilters(buildTags(opts));
     } catch {
