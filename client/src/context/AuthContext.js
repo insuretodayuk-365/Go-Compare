@@ -13,14 +13,13 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔐 Load user if token exists
+  // 🔐 Load user
   useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      // ✅ Use relative path (IMPORTANT)
       api.get('/api/auth/me')
         .then(res => setUser(res.data.user))
         .catch(() => {
@@ -78,5 +77,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-// 🔁 Hook
 export const useAuth = () => useContext(AuthContext);

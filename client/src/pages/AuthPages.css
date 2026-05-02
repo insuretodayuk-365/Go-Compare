@@ -27,9 +27,18 @@
   font-weight: 900;
   font-size: 24px;
 }
-.logo-insure { color: var(--green-dark); }
-.logo-today  { color: var(--green-bright); }
-.logo-uk     { color: var(--yellow-btn); font-size: 16px; margin-left: 2px; }
+.logo-go {
+  color: #09412a;
+  font-weight: 900;
+  font-size: 26px;
+}
+
+.logo-compare {
+  color: #09412a; /* not pure black */
+  font-weight: 900;
+  font-size: 26px;
+}
+
 
 .auth-title { font-size: 22px; text-align: center; color: var(--text-dark); margin-bottom: 6px; }
 .auth-sub   { text-align: center; font-size: 14px; color: var(--text-mid); margin-bottom: 24px; }
