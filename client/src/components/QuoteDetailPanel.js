@@ -4,9 +4,9 @@ import { useAuth } from "../context/AuthContext";
 
 function Stars({ count, total = 5 }) {
   return (
-    <div className="stars">
+    <div className="dp-stars">
       {Array.from({ length: total }).map((_, i) => (
-        <span key={i} className={`star ${i < count ? "filled" : ""}`}>
+        <span key={i} className={`dp-star ${i < count ? "filled" : ""}`}>
           ★
         </span>
       ))}
@@ -16,46 +16,38 @@ function Stars({ count, total = 5 }) {
 
 function CoverItem({ label, included }) {
   return (
-    <div className={`cover-item ${included ? "cover-yes" : "cover-no"}`}>
+    <div className={`dp-cover-item ${included ? "dp-yes" : "dp-no"}`}>
       {included ? (
         <svg
-          width="30"
-          height="30"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
-          style={{ color: "#07291b" }}
+          stroke="#1a4731"
+          strokeWidth="5"
         >
-          <path
-            d="M20 6L9 17l-5-5"
-            stroke="currentColor"
-            strokeWidth="5"
-            // strokeLinecap="round"
-            // strokeLinejoin="round"
-          />
+          <path d="M20 6L9 17l-5-5" />
         </svg>
       ) : (
         <svg
-          width="30"
-          height="30"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
-          style={{ color: "#aaa5a5" }}
+          stroke="#aaa"
+          strokeWidth="5"
         >
-          <path
-            d="M6 6L18 18M6 18L18 6"
-            stroke="currentColor"
-            strokeWidth="5"
-          />
+          <path d="M6 6L18 18M6 18L18 6" />
         </svg>
       )}
       <span>{label}</span>
       <svg
-        className="expand-arrow"
-        width="18"
-        height="18"
+        className="dp-arrow"
+        width="14"
+        height="14"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="currentColor"
+        stroke="#aaa"
         strokeWidth="2"
       >
         <path d="M6 9l6 6 6-6" />
@@ -66,13 +58,13 @@ function CoverItem({ label, included }) {
 
 function AddonItem({ label }) {
   return (
-    <div className="cover-item cover-addon">
+    <div className="dp-cover-item dp-addon">
       <svg
-        width="30"
-        height="30"
+        width="18"
+        height="18"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="currentColor"
+        stroke="#aaa"
         strokeWidth="5"
       >
         <line x1="12" y1="5" x2="12" y2="19" />
@@ -80,13 +72,13 @@ function AddonItem({ label }) {
       </svg>
       <span>{label}</span>
       <svg
-        className="expand-arrow"
+        className="dp-arrow"
         width="14"
         height="14"
         viewBox="0 0 24 24"
         fill="none"
-        stroke="currentColor"
-        strokeWidth="3.5"
+        stroke="#aaa"
+        strokeWidth="2"
       >
         <path d="M6 9l6 6 6-6" />
       </svg>
@@ -95,17 +87,16 @@ function AddonItem({ label }) {
 }
 
 export default function QuoteDetailPanel({ quote, onClose }) {
-  // Close on Escape
   const { user } = useAuth();
+
   useEffect(() => {
-    const handler = (e) => {
+    const h = (e) => {
       if (e.key === "Escape") onClose();
     };
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
+    document.addEventListener("keydown", h);
+    return () => document.removeEventListener("keydown", h);
   }, [onClose]);
 
-  // Prevent body scroll
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -113,13 +104,16 @@ export default function QuoteDetailPanel({ quote, onClose }) {
     };
   }, []);
 
+  const priceInt = Math.floor(quote.annualPrice);
+  const priceDec = (quote.annualPrice % 1).toFixed(2).slice(2);
+
   return (
     <>
-      <div className="panel-backdrop" onClick={onClose} />
-      <aside className="detail-panel">
-        {/* Header */}
-        <div className="panel-header">
-          <div className="panel-header-insurer">
+      <div className="dp-backdrop" onClick={onClose} />
+      <aside className="dp-panel">
+        {/* ── Header ── */}
+        <div className="dp-header">
+          <div className="dp-header-left">
             <img
               src={quote.logo}
               alt={quote.insurer}
@@ -128,60 +122,58 @@ export default function QuoteDetailPanel({ quote, onClose }) {
                 e.target.nextSibling.style.display = "flex";
               }}
             />
-            <div className="logo-fallback-sm" style={{ display: "none" }}>
+            <div className="dp-logo-fallback" style={{ display: "none" }}>
               {quote.insurer}
             </div>
-            <div className="tier-badge">{quote.tier}</div>
+            <div className="dp-tier-badge">{quote.tier}</div>
           </div>
-          <button className="panel-close" onClick={onClose}>
+          <button className="dp-close" onClick={onClose}>
             ✕
           </button>
         </div>
 
-        <div className="panel-body">
-          {/* Total price */}
-          <div className="panel-price-section">
-            <Stars count={quote.rating} />
-            <div className="panel-defaqto">from defaqto</div>
-
-            <h2 className="panel-price-title">Total annual price</h2>
-            <div className="panel-price">
-              <span className="panel-price-sym">£</span>
-              <span className="panel-price-int">
-                {Math.floor(quote.annualPrice)}
-              </span>
-              <span className="panel-price-dec">
-                .{(quote.annualPrice % 1).toFixed(2).slice(2)}
-              </span>
+        {/* ── Scrollable body ── */}
+        <div className="dp-body">
+          {/* Price */}
+          <div className="dp-price-section">
+            <div className="dp-stars-container">
+              <Stars count={quote.rating} />
+              <div className="dp-defaqto">from defaqto</div>
             </div>
-            <p className="panel-price-note">
+            <div className="dp-price-title">Total annual price</div>
+            <div className="dp-price-row">
+              <span className="dp-price-sym">£</span>
+              <span className="dp-price-int">{priceInt}</span>
+              <span className="dp-price-dec">.{priceDec}</span>
+            </div>
+            <p className="dp-price-note">
               Insurance quotes are priced in real time, tomorrow's prices might
               look different
             </p>
           </div>
 
-          {/* Excess breakdown */}
-          <div className="panel-section panel-excess">
-            <div className="excess-row">
+          {/* Excess */}
+          <div className="dp-excess-box">
+            <div className="dp-excess-row main">
               <span>Total excess on this policy</span>
               <strong>£{quote.totalExcess}</strong>
             </div>
-            <div className="excess-row sub">
+            <div className="dp-excess-row sub">
               <span>Voluntary</span>
               <span>£{quote.voluntaryExcess}</span>
             </div>
-            <div className="excess-row sub">
+            <div className="dp-excess-row sub">
               <span>Compulsory</span>
               <span>£{quote.compulsoryExcess}</span>
             </div>
-            <div className="excess-note">
+            <div className="dp-excess-note">
               <svg
-                width="22"
-                height="22"
+                width="14"
+                height="14"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth="3.5"
+                stroke="#446"
+                strokeWidth="2"
               >
                 <circle cx="12" cy="12" r="10" />
                 <path d="M12 16v-4M12 8h.01" />
@@ -191,16 +183,16 @@ export default function QuoteDetailPanel({ quote, onClose }) {
             </div>
           </div>
 
-          {/* Reward banner */}
-          <div className="panel-reward">
-            <div className="reward-mascot-sm">
+          {/* Reward */}
+          <div className="dp-reward">
+            <div className="dp-reward-mascot">
               <img
                 src="/images/mascot.png"
                 alt=""
                 onError={(e) => (e.target.style.display = "none")}
               />
             </div>
-            <div className="reward-content">
+            <div className="dp-reward-text">
               <h4>Free £250 excess refund reward</h4>
               <p>
                 Look out for an email from us letting you know how to claim your
@@ -208,52 +200,52 @@ export default function QuoteDetailPanel({ quote, onClose }) {
               </p>
             </div>
           </div>
-          <div className="panel-docs">
+          <div className="dp-docs">
             <a href="#!">Insurance information document</a>
             <a href="#!">Demands &amp; needs</a>
           </div>
 
           {/* Overview */}
-          <div className="panel-section">
-            <h3 className="panel-section-title">Overview</h3>
-            <div className="overview-grid">
-              <div className="overview-row">
+          <div className="dp-section">
+            <div className="dp-section-title">Overview</div>
+            <div className="dp-overview">
+              <div className="dp-ov-row">
                 <span>Proposer name</span>
                 <strong>
-                  {user ? `${user.firstName} ${user.lastName}` : "N/A"}
+                  {user ? `${user.firstName} ${user.lastName}` : "Guest"}
                 </strong>
               </div>
-              <div className="overview-row">
+              <div className="dp-ov-row">
                 <span>Additional driver(s)</span>
                 <strong>None</strong>
               </div>
-              <div className="overview-row">
+              <div className="dp-ov-row">
                 <span>Start date</span>
                 <strong>1st May 2026</strong>
               </div>
-              <div className="overview-row">
+              <div className="dp-ov-row">
                 <span>Cover type</span>
                 <strong>Comprehensive</strong>
               </div>
-              <div className="overview-row">
+              <div className="dp-ov-row">
                 <span>No claims bonus protected</span>
                 <strong>No</strong>
               </div>
             </div>
           </div>
 
-          {/* Cover with this policy */}
-          <div className="panel-section">
-            <h3 className="panel-section-title">Cover with this policy</h3>
+          {/* Cover */}
+          <div className="dp-section">
+            <div className="dp-section-title">Cover with this policy</div>
 
-            <div className="cover-group-label">Covered</div>
+            <div className="dp-group-label">Covered</div>
             {quote.covered.map((item) => (
               <CoverItem key={item} label={item} included={true} />
             ))}
 
             {quote.addons.length > 0 && (
               <>
-                <div className="cover-group-label" style={{ marginTop: 12 }}>
+                <div className="dp-group-label" style={{ marginTop: 14 }}>
                   Add-ons
                 </div>
                 {quote.addons.map((item) => (
@@ -265,8 +257,8 @@ export default function QuoteDetailPanel({ quote, onClose }) {
             {quote.notCovered.length > 0 && (
               <>
                 <div
-                  className="cover-group-label not-covered"
-                  style={{ marginTop: 12 }}
+                  className="dp-group-label dp-not-covered"
+                  style={{ marginTop: 14 }}
                 >
                   Not covered
                 </div>
@@ -277,14 +269,12 @@ export default function QuoteDetailPanel({ quote, onClose }) {
             )}
           </div>
 
-          {/* Fees section placeholder */}
-          <div className="panel-section">
-            <h3 className="panel-section-title">
-              Fees, excesses and your info
-            </h3>
-            <div className="fees-grid">
+          {/* Fees */}
+          <div className="dp-section">
+            <div className="dp-section-title">Fees, excesses and your info</div>
+            <div className="dp-fees-grid">
               {["Fees", "Claims", "Excesses", "Demands & needs"].map((item) => (
-                <div key={item} className="fees-item">
+                <div key={item} className="dp-fees-item">
                   {item}
                 </div>
               ))}
@@ -292,17 +282,17 @@ export default function QuoteDetailPanel({ quote, onClose }) {
           </div>
         </div>
 
-        {/* Go to insurer CTA */}
-        <div className="panel-footer">
+        {/* ── Footer ── */}
+        <div className="dp-footer">
           <a
             href="#!"
-            className="go-to-insurer-btn"
+            className="dp-cta-btn"
             onClick={(e) => e.preventDefault()}
           >
             Go to insurer's site
             <svg
-              width="18"
-              height="18"
+              width="16"
+              height="16"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
