@@ -41,7 +41,7 @@
 }
 .qcm-stars { display: flex; gap: 1px; }
 .qcm-stars span { font-size: 12px; color: #ddd; }
-.qcm-stars span.filled { color: #f5a623; }
+.qcm-stars span.filled { color: #083d04;  }
 .qcm-defaqto { font-size: 9px; color: #999; }
 
 /* Price stack */
