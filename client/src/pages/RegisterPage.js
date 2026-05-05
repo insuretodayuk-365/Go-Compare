@@ -33,9 +33,8 @@ export default function RegisterPage() {
       <div className="auth-card">
         <div className="auth-logo">
           <Link to="/" className="auth-logo-link">
-            <span className="logo-insure">INSURE</span>
-            <span className="logo-today">TODAY</span>
-            <span className="logo-uk">UK</span>
+            <span className="logo-go">GO.</span>
+            <span className="logo-compare">COMPARE</span>
           </Link>
         </div>
         <h1 className="auth-title">Create your account</h1>

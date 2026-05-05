@@ -1,15 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import api from "../api";
 
 const AuthContext = createContext(null);
-
-const API_URL = process.env.REACT_APP_API_URL || 'https://go-compare-2.onrender.com';
-
-const api = axios.create({
-  baseURL: API_URL,
-});
-
-console.log("API:", process.env.REACT_APP_API_URL);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -17,16 +9,17 @@ export function AuthProvider({ children }) {
 
   // 🔐 Load user
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     if (token) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      api.get('/api/auth/me')
-        .then(res => setUser(res.data.user))
+      api
+        .get("/api/auth/me")
+        .then((res) => setUser(res.data.user))
         .catch(() => {
-          localStorage.removeItem('token');
-          delete api.defaults.headers.common['Authorization'];
+          localStorage.removeItem("token");
+          delete api.defaults.headers.common["Authorization"];
         })
         .finally(() => setLoading(false));
     } else {
@@ -36,12 +29,12 @@ export function AuthProvider({ children }) {
 
   // 🔑 LOGIN
   const login = async (email, password) => {
-    const res = await api.post('/api/auth/login', { email, password });
+    const res = await api.post("/api/auth/login", { email, password });
 
     const { token, user } = res.data;
 
-    localStorage.setItem('token', token);
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    localStorage.setItem("token", token);
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     setUser(user);
 
     return res.data;
@@ -49,7 +42,7 @@ export function AuthProvider({ children }) {
 
   // 📝 REGISTER
   const register = async (firstName, lastName, email, password) => {
-    const res = await api.post('/api/auth/register', {
+    const res = await api.post("/api/auth/register", {
       firstName,
       lastName,
       email,
@@ -58,8 +51,8 @@ export function AuthProvider({ children }) {
 
     const { token, user } = res.data;
 
-    localStorage.setItem('token', token);
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    localStorage.setItem("token", token);
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     setUser(user);
 
     return res.data;
@@ -67,8 +60,8 @@ export function AuthProvider({ children }) {
 
   // 🚪 LOGOUT
   const logout = () => {
-    localStorage.removeItem('token');
-    delete api.defaults.headers.common['Authorization'];
+    localStorage.removeItem("token");
+    delete api.defaults.headers.common["Authorization"];
     setUser(null);
   };
 

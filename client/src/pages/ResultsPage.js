@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import api from "../api";
 import QuoteCardD from "../components/QuoteCardD";
 import QuoteCardM from "../components/QuoteCardM";
 import QuoteDetailPanel from "../components/QuoteDetailPanel";
@@ -38,8 +38,8 @@ export default function ResultsPage() {
   });
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/quotes`)
+    api
+      .get("/api/quotes")
       .then((r) => {
         setAllQuotes(r.data.quotes);
         setQuotes(r.data.quotes);
@@ -78,10 +78,7 @@ export default function ResultsPage() {
       setFiltering(true);
       setShowMobileSidebar(false);
       try {
-        const res = await axios.post(
-          `${process.env.REACT_APP_API_URL}/api/quotes/filter`,
-          opts,
-        );
+        const res = await api.post("/api/quotes/filter", opts);
         setQuotes(res.data.quotes);
         setActiveFilters(buildTags(opts));
       } catch {
