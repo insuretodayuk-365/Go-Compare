@@ -98,7 +98,7 @@ const ALL_QUOTES = [
   //   info: "Budget-friendly comprehensive cover with competitive excess options."
   // },
   {
-    id: 13, insurer: '1st Central', tier: 'Premier', logo: '/logos/1stcentral-logo.png', rating: 4, ratingSource: 'defaqto',
+    id: 13, insurer: '1st Central', tier: 'Premier', logo: '/logos/1stCentral-logo.png', rating: 4, ratingSource: 'defaqto',
     annualPrice: 1655.30, totalExcess: 350, voluntaryExcess: 150, compulsoryExcess: 200,
     covered: ['Windscreen cover', 'Courtesy car', 'Key cover', 'Personal accident'],
     addons: ['Legal assistance', 'Breakdown cover'],
