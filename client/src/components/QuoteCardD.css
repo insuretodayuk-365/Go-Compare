@@ -42,7 +42,7 @@
 }
 .qcd-stars { display: flex; gap: 1px; }
 .qcd-stars span { font-size: 13px; color: #ddd; }
-.qcd-stars span.filled { color: #f5a623; }
+.qcd-stars span.filled { color: #083d04; }
 .qcd-defaqto { font-size: 9px; color: #999; }
 
 /* Features */
