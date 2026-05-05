@@ -8,6 +8,10 @@ const quoteRoutes = require('./routes/quotes');
 
 const app = express();
 
+// ✅ PORT must be defined BEFORE using it
+const PORT = process.env.PORT || 5000;
+
+// ✅ CORS setup
 const allowedOrigins = [
   process.env.CLIENT_URL,
   'http://localhost:5000',
@@ -16,7 +20,7 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); 
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
@@ -29,20 +33,6 @@ app.options('*', cors());
 
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connected");
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error("MongoDB connection error:", err);
-    process.exit(1);
-  });
-
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/quotes', quoteRoutes);
@@ -54,6 +44,16 @@ app.get('/', (req, res) => {
   });
 });
 
-// Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// ✅ Start server ONLY after DB connects
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB connected");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  });
