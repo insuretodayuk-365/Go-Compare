@@ -215,3 +215,12 @@
   .results-layout { padding: 12px 10px; }
   .sidebar { display: none; }
 }
+
+/* Responsive card display */
+.show-desktop-card { display: block; }
+.show-mobile-card { display: none; }
+
+@media (max-width: 600px) {
+  .show-desktop-card { display: none; }
+  .show-mobile-card { display: block; }
+}

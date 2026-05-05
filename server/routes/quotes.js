@@ -2,244 +2,244 @@ const router = require('express').Router();
 
 const ALL_QUOTES = [
   {
-    id: 1, insurer: 'Allianz', tier: 'Online Bronze', logo: '/logos/allianz-logo.svg', rating: 2, ratingSource: 'defaqto',
+    id: 1, insurer: 'Allianz', tier: 'Comprehensive Plus', logo: '/logos/allianz-logo.svg', rating: 5, ratingSource: 'defaqto',
     annualPrice: 1371.34, totalExcess: 450, voluntaryExcess: 100, compulsoryExcess: 350,
     covered: ['Personal accident', 'Windscreen cover', 'Key cover', 'Contents cover'],
     addons: ['Legal assistance', 'Breakdown cover', 'Courtesy car'],
     notCovered: ['Driving abroad cover', 'Misfuelling', 'Personal belongings cover'],
-    info: "Online-focused policy with claims support via phone."
+    info: "Online-focused policy with claims support via phone. No admin fees. You're in control."
   },
   {
-    id: 2, insurer: 'Allianz', tier: 'Online Silver', logo: '/logos/allianz-logo.svg', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1398.65, totalExcess: 350, voluntaryExcess: 100, compulsoryExcess: 250,
-    covered: ['Personal accident', 'Courtesy car', 'Windscreen cover', 'Key cover', 'Contents cover'],
+    id: 2, insurer: 'Admiral', tier: 'Standard', logo: '/logos/admiral-logo.svg', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1398.65, totalExcess: 175, voluntaryExcess: 0, compulsoryExcess: 175,
+    covered: ['Personal accident', 'Courtesy car', 'Windscreen cover', 'Key cover'],
     addons: ['Legal assistance', 'Breakdown cover'],
     notCovered: ['Driving abroad cover', 'Misfuelling', 'Personal belongings cover'],
-    info: "Higher Defaqto rating with reduced compulsory excess."
+    info: "No admin fees for making changes to your policy. Excludes cancellation fees."
   },
+  // {
+  //   id: 3, insurer: 'Admiral', tier: 'Gold', logo: '/logos/admiral-logo.svg', rating: 5, ratingSource: 'defaqto',
+  //   annualPrice: 1437.46, totalExcess: 175, voluntaryExcess: 0, compulsoryExcess: 175,
+  //   covered: ['Legal assistance', 'Personal accident', 'Courtesy car', 'Windscreen cover', 'Key cover', 'Contents cover'],
+  //   addons: ['Breakdown cover'],
+  //   notCovered: ['Driving abroad cover', 'Misfuelling'],
+  //   info: "Admiral Gold gives you our highest level of protection."
+  // },
   {
-    id: 3, insurer: 'Allianz', tier: 'Online Gold', logo: '/logos/allianz-logo.svg', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1437.46, totalExcess: 350, voluntaryExcess: 100, compulsoryExcess: 250,
-    covered: ['Legal assistance', 'Personal accident', 'Courtesy car', 'Windscreen cover', 'Key cover', 'Contents cover'],
-    addons: ['Breakdown cover'],
-    notCovered: ['Driving abroad cover', 'Misfuelling', 'Personal belongings cover'],
-    info: "Premium tier with Legal Assistance included as standard."
-  },
-  {
-    id: 4, insurer: 'Admiral', tier: 'Standard', logo: '/logos/admiral-logo.svg', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1512.83, totalExcess: 175, voluntaryExcess: 0, compulsoryExcess: 175,
-    covered: ['Personal accident', 'Courtesy car', 'Windscreen cover', 'Key cover', 'Contents cover'],
-    addons: ['Legal assistance', 'Breakdown cover'],
+    id: 4, insurer: 'Aviva', tier: 'Comprehensive', logo: '/logos/aviva-logo.svg', rating: 5, ratingSource: 'defaqto',
+    annualPrice: 1512.83, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
+    covered: ['Legal assistance', 'Personal accident', 'Windscreen cover', 'Key cover'],
+    addons: ['Courtesy car', 'Breakdown cover'],
     notCovered: ['Driving abroad cover', 'Misfuelling'],
-    info: "No admin fees for policy changes. Market leader in reliability."
+    info: "Manage your policy online or through the Aviva app. Fast claims handling."
   },
   {
-    id: 5, insurer: 'Elephant', tier: 'Standard', logo: '/logos/elephant-logo.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1527.96, totalExcess: 175, voluntaryExcess: 0, compulsoryExcess: 175,
-    covered: ['Personal accident', 'Courtesy car', 'Windscreen cover'],
-    addons: ['Legal assistance', 'Breakdown cover'],
-    notCovered: ['Driving abroad cover', 'Misfuelling', 'Personal belongings cover'],
-    info: "Simple, efficient comprehensive cover."
+    id: 5, insurer: 'AXA', tier: 'Comprehensive', logo: '/logos/axa-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1527.96, totalExcess: 350, voluntaryExcess: 200, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Personal accident', 'Key cover'],
+    addons: ['Legal assistance', 'Courtesy car', 'Breakdown cover'],
+    notCovered: ['Driving abroad cover', 'Personal belongings cover'],
+    info: "Global insurance giant with a strong UK presence and fast claims service."
   },
   {
-    id: 6, insurer: 'Admiral', tier: 'Gold', logo: '/logos/admiral-logo.svg', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1537.34, totalExcess: 175, voluntaryExcess: 0, compulsoryExcess: 175,
-    covered: ['Legal assistance', 'Personal accident', 'Courtesy car', 'Windscreen cover', 'Key cover', 'Contents cover'],
+    id: 6, insurer: 'Direct Line', tier: 'Comprehensive', logo: '/logos/direct-line-logo.png', rating: 5, ratingSource: 'defaqto',
+    annualPrice: 1537.34, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
+    covered: ['Legal assistance', 'Courtesy car', 'Windscreen cover', 'Personal accident'],
     addons: ['Breakdown cover'],
     notCovered: ['Driving abroad cover', 'Misfuelling'],
-    info: "Admiral's highest protection tier with enhanced benefits."
+    info: "Direct Line don't appear on comparison sites — get an exclusive price here."
   },
+  // {
+  //   id: 7, insurer: 'Hastings Direct', tier: 'Comprehensive', logo: '/logos/hastings-direct-logo.png', rating: 3, ratingSource: 'defaqto',
+  //   annualPrice: 1543.09, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
+  //   covered: ['Windscreen cover', 'Personal accident', 'Courtesy car'],
+  //   addons: ['Legal assistance', 'Breakdown cover'],
+  //   notCovered: ['Key cover', 'Personal belongings cover'],
+  //   info: "Competitive rates with a straightforward online claims process."
+  // },
   {
-    id: 7, insurer: 'Diamond', tier: 'Standard', logo: '/logos/diamond-logo.jpg', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1543.09, totalExcess: 175, voluntaryExcess: 0, compulsoryExcess: 175,
-    covered: ['Personal accident', 'Courtesy car', 'Windscreen cover'],
-    addons: ['Legal assistance', 'Breakdown cover'],
-    notCovered: ['Driving abroad cover', 'Misfuelling', 'Personal belongings cover'],
-    info: "Tailored for specific driver profiles with high satisfaction."
-  },
-  {
-    id: 8, insurer: 'Hastings Direct', tier: 'YouDrive', logo: '/logos/hasting-direct-logo.png', rating: 3, ratingSource: 'defaqto',
+    id: 8, insurer: 'Hastings Direct', tier: 'YouDrive', logo: '/logos/hastings-direct-logo.png', rating: 3, ratingSource: 'defaqto',
     annualPrice: 1555.20, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
     covered: ['Windscreen cover', 'Personal accident'],
     addons: ['Legal assistance', 'Courtesy car'],
     notCovered: ['Key cover', 'Breakdown cover'],
-    info: "Smart telematics policy—perfect for safe drivers."
+    info: "Smart telematics policy — safe drivers are rewarded with lower premiums."
   },
   {
-    id: 9, insurer: 'Hastings Direct', tier: 'Essential', logo: '/logos/hasting-direct-logo.png', rating: 3, ratingSource: 'defaqto',
-    annualPrice: 1580.50, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Courtesy car'],
-    addons: ['Personal accident', 'Legal assistance'],
-    notCovered: ['Key cover'],
-    info: "No-frills comprehensive insurance at a competitive price."
-  },
-  {
-    id: 10, insurer: 'Hastings Premier', tier: 'Comprehensive', logo: '/logos/hasting-premier-logo.png', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1610.15, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
-    covered: ['Legal assistance', 'Windscreen cover', 'Key cover', 'Courtesy car'],
+    id: 9, insurer: 'LV=', tier: 'Comprehensive', logo: '/logos/lv-logo.jpg', rating: 5, ratingSource: 'defaqto',
+    annualPrice: 1580.50, totalExcess: 200, voluntaryExcess: 50, compulsoryExcess: 150,
+    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car', 'Personal accident'],
     addons: ['Breakdown cover'],
-    notCovered: [],
-    info: "Top-tier Hastings cover with all standard features included."
+    notCovered: ['Misfuelling', 'Driving abroad cover'],
+    info: "Highly rated for customer service and claims handling. UK-based claims team."
   },
   {
-    id: 11, insurer: 'Aviva Online', tier: 'Premium', logo: '/logos/aviva-logo.svg', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1625.00, totalExcess: 400, voluntaryExcess: 250, compulsoryExcess: 150,
-    covered: ['Legal assistance', 'Personal accident', 'Windscreen cover', 'New car replacement'],
-    addons: ['Foreign use extension'],
-    notCovered: ['Key cover'],
-    info: "Managed entirely through the Aviva app."
-  },
-  {
-    id: 12, insurer: 'Quotemehappy.com', tier: 'Essentials', logo: '/logos/quote-me-happy-logo.png', rating: 3, ratingSource: 'defaqto',
-    annualPrice: 1638.45, totalExcess: 500, voluntaryExcess: 250, compulsoryExcess: 250,
-    covered: ['Windscreen cover', 'Courtesy car'],
-    addons: ['Personal accident'],
-    notCovered: ['Legal assistance'],
-    info: "Digital-only brand powered by Aviva."
-  },
-  {
-    id: 13, insurer: 'Churchill', tier: 'Standard', logo: '/logos/churchill-logo.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1655.30, totalExcess: 200, voluntaryExcess: 0, compulsoryExcess: 200,
-    covered: ['Courtesy car', 'Windscreen cover', 'Personal accident'],
-    addons: ['Breakdown cover', 'Legal assistance'],
-    notCovered: ['Misfuelling'],
-    info: "Reliable cover with the famous Churchill guarantee."
-  },
-  {
-    id: 14, insurer: 'Churchill', tier: 'Plus', logo: '/logos/churchill-logo.png', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1689.90, totalExcess: 150, voluntaryExcess: 0, compulsoryExcess: 150,
-    covered: ['Legal assistance', 'Courtesy car', 'Windscreen cover', 'Key cover'],
-    addons: ['Breakdown cover'],
-    notCovered: [],
-    info: "Enhanced protection limits and low excess."
-  },
-  {
-    id: 15, insurer: 'Privilege', tier: 'Standard', logo: '/logos/privilege-logo.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1695.00, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Personal accident', 'Courtesy car'],
-    addons: ['Legal assistance'],
-    notCovered: ['Driving abroad'],
-    info: "Competitive rates for low-risk drivers."
-  },
-  {
-    id: 16, insurer: 'LV=', tier: 'Standard', logo: '/logos/lv-logo.jpg', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1710.20, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Courtesy car', 'Legal assistance'],
-    addons: ['Breakdown cover'],
-    notCovered: ['Misfuelling'],
-    info: "Highly rated for customer service and claims handling."
-  },
-  {
-    id: 17, insurer: 'AXA', tier: 'Plus', logo: '/logos/axa-logo.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1725.50, totalExcess: 350, voluntaryExcess: 200, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Key cover', 'Personal accident'],
-    addons: ['Courtesy car', 'Legal assistance'],
-    notCovered: ['Driving abroad'],
-    info: "Global insurance giant with massive UK support."
-  },
-  {
-    id: 18, insurer: 'Direct Line', tier: 'Comprehensive', logo: '/logos/direct-line-logo.png', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1740.00, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
-    covered: ['Courtesy car', 'Windscreen cover', 'Personal accident', 'Legal assistance'],
-    addons: ['Breakdown cover'],
-    notCovered: [],
-    info: "The flagship for direct car insurance in the UK."
-  },
-  {
-    id: 19, insurer: '1st Central', tier: 'Value', logo: '/logos/1stCentral-logo.png', rating: 2, ratingSource: 'defaqto',
-    annualPrice: 1755.99, totalExcess: 550, voluntaryExcess: 300, compulsoryExcess: 250,
-    covered: ['Windscreen cover'],
-    addons: ['Courtesy car', 'Legal assistance'],
-    notCovered: ['Personal accident', 'Key cover'],
-    info: "Entry-level cover with a higher excess for lower monthly costs."
-  },
-  {
-    id: 20, insurer: '1st Central', tier: 'Standard', logo: '/logos/1stCentral-logo.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1780.40, totalExcess: 450, voluntaryExcess: 250, compulsoryExcess: 200,
-    covered: ['Windscreen cover', 'Key cover', 'Courtesy car'],
-    addons: ['Legal assistance'],
-    notCovered: ['Driving abroad'],
-    info: "Solid mid-range cover from a popular broker."
-  },
-  {
-    id: 21, insurer: 'More Than', tier: 'Primary', logo: '/logos/more-than-logo.jpg', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1795.10, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Courtesy car'],
-    addons: ['Personal accident', 'Legal assistance'],
-    notCovered: ['Misfuelling'],
-    info: "Simple claims process and digital-first support."
-  },
-  {
-    id: 22, insurer: 'Sheilas Wheels', tier: 'Standard', logo: '/logos/sw-logo.jpg', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1810.00, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Personal accident', 'Courtesy car'],
-    addons: ['Legal assistance'],
-    notCovered: ['Key cover'],
-    info: "Well-known brand with high customer loyalty."
-  },
-  {
-    id: 23, insurer: 'Co-op Insurance', tier: 'Eco-Share', logo: '/logos/co-op-logo.png', rating: 3, ratingSource: 'defaqto',
-    annualPrice: 1830.25, totalExcess: 350, voluntaryExcess: 200, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Personal accident'],
-    addons: ['Courtesy car'],
-    notCovered: ['Legal assistance'],
-    info: "Insurance with a community and ethical focus."
-  },
-  {
-    id: 24, insurer: 'Ageas', tier: 'Essentials', logo: '/logos/ageas-logo.jpg', rating: 3, ratingSource: 'defaqto',
-    annualPrice: 1845.60, totalExcess: 400, voluntaryExcess: 200, compulsoryExcess: 200,
-    covered: ['Windscreen cover', 'Key cover'],
-    addons: ['Courtesy car'],
-    notCovered: ['Legal assistance', 'Personal belongings'],
-    info: "Award-winning claims service at a budget price."
-  },
-  {
-    id: 25, insurer: 'Tesco Bank', tier: 'Standard', logo: '/logos/tesco-bank.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1860.00, totalExcess: 250, voluntaryExcess: 125, compulsoryExcess: 125,
-    covered: ['Windscreen cover', 'Courtesy car'],
-    addons: ['Legal assistance', 'Breakdown cover'],
-    notCovered: ['Driving abroad'],
-    info: "Extra benefits available for Clubcard members."
-  },
-  {
-    id: 26, insurer: 'Saga', tier: 'Select', logo: '/logos/saga-logo.jpg', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1885.40, totalExcess: 200, voluntaryExcess: 0, compulsoryExcess: 200,
-    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car', 'Medical expenses'],
-    addons: ['Breakdown cover'],
-    notCovered: [],
-    info: "Specialist insurance designed for the over 50s."
-  },
-  {
-    id: 27, insurer: 'Flow', tier: 'Monthly', logo: '/logos/flow-logo.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1910.00, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
-    covered: ['Windscreen cover', 'Key cover'],
-    addons: ['Courtesy car'],
-    notCovered: ['Legal assistance'],
-    info: "Subscription-style insurance for modern lifestyles."
-  },
-  {
-    id: 28, insurer: 'General Accident', tier: 'Telematics', logo: '/logos/general-accident-logo.jpg', rating: 3, ratingSource: 'defaqto',
-    annualPrice: 1925.75, totalExcess: 450, voluntaryExcess: 250, compulsoryExcess: 200,
-    covered: ['Windscreen cover', 'Personal accident'],
-    addons: ['Legal assistance'],
-    notCovered: ['Key cover'],
-    info: "Heritage brand offering modern black-box policies."
-  },
-  {
-    id: 29, insurer: 'Esure', tier: 'Standard', logo: '/logos/esure-logo.png', rating: 4, ratingSource: 'defaqto',
-    annualPrice: 1940.20, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
+    id: 10, insurer: 'Esure', tier: 'Standard', logo: '/logos/esure-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1610.15, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
     covered: ['Windscreen cover', 'Courtesy car', 'Key cover'],
-    addons: ['Legal assistance'],
-    notCovered: ['Misfuelling'],
-    info: "Reliable and straightforward comprehensive cover."
+    addons: ['Legal assistance', 'Personal accident'],
+    notCovered: ['Misfuelling', 'Driving abroad cover'],
+    info: "Reliable and straightforward comprehensive cover with no hidden fees."
   },
   {
-    id: 30, insurer: 'NFU Mutual', tier: 'Comprehensive', logo: '/logos/nfu-mutual-logo.png', rating: 5, ratingSource: 'defaqto',
-    annualPrice: 1980.50, totalExcess: 100, voluntaryExcess: 0, compulsoryExcess: 100,
-    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car'],
+    id: 11, insurer: 'NFU Mutual', tier: 'Comprehensive', logo: '/logos/nfu-mutual-logo.png', rating: 5, ratingSource: 'defaqto',
+    annualPrice: 1625.00, totalExcess: 100, voluntaryExcess: 0, compulsoryExcess: 100,
+    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car', 'Key cover'],
     addons: ['Breakdown cover'],
     notCovered: [],
-    info: "Local service with a high-trust mutual model."
+    info: "Local agent service with a high-trust mutual model. Outstanding claims reputation."
+  },
+  // {
+  //   id: 12, insurer: '1st Central', tier: 'Standard', logo: '/logos/1stcentral-logo.png', rating: 3, ratingSource: 'defaqto',
+  //   annualPrice: 1638.45, totalExcess: 500, voluntaryExcess: 250, compulsoryExcess: 250,
+  //   covered: ['Windscreen cover', 'Courtesy car'],
+  //   addons: ['Legal assistance', 'Personal accident'],
+  //   notCovered: ['Key cover', 'Driving abroad cover'],
+  //   info: "Budget-friendly comprehensive cover with competitive excess options."
+  // },
+  {
+    id: 13, insurer: '1st Central', tier: 'Premier', logo: '/logos/1stcentral-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1655.30, totalExcess: 350, voluntaryExcess: 150, compulsoryExcess: 200,
+    covered: ['Windscreen cover', 'Courtesy car', 'Key cover', 'Personal accident'],
+    addons: ['Legal assistance', 'Breakdown cover'],
+    notCovered: ['Driving abroad cover'],
+    info: "Enhanced tier with more comprehensive cover and lower excess."
+  },
+  // {
+  //   id: 14, insurer: 'Ageas', tier: 'Essentials', logo: '/logos/ageas-logo.jpg', rating: 3, ratingSource: 'defaqto',
+  //   annualPrice: 1689.90, totalExcess: 400, voluntaryExcess: 200, compulsoryExcess: 200,
+  //   covered: ['Windscreen cover', 'Key cover'],
+  //   addons: ['Courtesy car', 'Legal assistance'],
+  //   notCovered: ['Personal accident', 'Misfuelling'],
+  //   info: "Award-winning claims service. Get a quote and buy online in minutes."
+  // },
+  {
+    id: 15, insurer: 'Ageas', tier: 'Optimum', logo: '/logos/ageas-logo.jpg', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1695.00, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Personal accident', 'Courtesy car', 'Key cover'],
+    addons: ['Legal assistance', 'Breakdown cover'],
+    notCovered: ['Misfuelling'],
+    info: "Ageas Optimum gives you extra peace of mind with broader cover."
+  },
+  {
+    id: 16, insurer: 'Chubb', tier: 'Masterpiece', logo: '/logos/chubb-logo.jpg', rating: 5, ratingSource: 'defaqto',
+    annualPrice: 1710.20, totalExcess: 150, voluntaryExcess: 0, compulsoryExcess: 150,
+    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car', 'Key cover', 'Personal accident', 'Contents cover'],
+    addons: ['Breakdown cover'],
+    notCovered: [],
+    info: "Premium policy with agreed value cover and worldwide protection."
+  },
+  {
+    id: 17, insurer: 'Covea Insurance', tier: 'Comprehensive', logo: '/logos/covea-logo.jpg', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1725.50, totalExcess: 275, voluntaryExcess: 125, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Courtesy car', 'Personal accident'],
+    addons: ['Legal assistance', 'Key cover'],
+    notCovered: ['Misfuelling', 'Driving abroad cover'],
+    info: "Covea Insurance — specialist motor insurance backed by a mutual insurer."
+  },
+  {
+    id: 18, insurer: 'RSA', tier: 'Standard', logo: '/logos/rsa-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1740.00, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Personal accident', 'Courtesy car'],
+    addons: ['Legal assistance', 'Breakdown cover'],
+    notCovered: ['Key cover', 'Driving abroad cover'],
+    info: "RSA is one of the world's longest-standing general insurers. Reliable cover."
+  },
+  {
+    id: 19, insurer: 'Tesco Insurance', tier: 'Comprehensive', logo: '/logos/tesco-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1755.99, totalExcess: 250, voluntaryExcess: 125, compulsoryExcess: 125,
+    covered: ['Windscreen cover', 'Courtesy car', 'Personal accident'],
+    addons: ['Legal assistance', 'Breakdown cover'],
+    notCovered: ['Driving abroad cover'],
+    info: "Clubcard points on your premium. Extra savings for loyal Tesco shoppers."
+  },
+  {
+    id: 20, insurer: 'Zurich', tier: 'Comprehensive', logo: '/logos/zurich-logo.jpg', rating: 5, ratingSource: 'defaqto',
+    annualPrice: 1780.40, totalExcess: 200, voluntaryExcess: 50, compulsoryExcess: 150,
+    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car', 'Key cover', 'Personal accident'],
+    addons: ['Breakdown cover'],
+    notCovered: ['Misfuelling'],
+    info: "Zurich's comprehensive cover includes new car replacement for qualifying vehicles."
+  },
+  {
+    id: 21, insurer: 'QBE', tier: 'Standard', logo: '/logos/qbe-logo.png', rating: 3, ratingSource: 'defaqto',
+    annualPrice: 1795.10, totalExcess: 350, voluntaryExcess: 200, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Courtesy car'],
+    addons: ['Legal assistance', 'Personal accident'],
+    notCovered: ['Key cover', 'Misfuelling'],
+    info: "QBE is a leading international insurer with strong financial backing."
+  },
+  {
+    id: 22, insurer: 'ERS', tier: 'Classic Car', logo: '/logos/ers-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1810.00, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Personal accident', 'Courtesy car', 'Key cover'],
+    addons: ['Legal assistance', 'Breakdown cover'],
+    notCovered: ['Misfuelling'],
+    info: "ERS specialises in non-standard vehicles and classic car cover."
+  },
+  {
+    id: 23, insurer: 'FBD Insurance', tier: 'Comprehensive', logo: '/logos/fbd-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1830.25, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Courtesy car', 'Personal accident'],
+    addons: ['Legal assistance'],
+    notCovered: ['Key cover', 'Driving abroad cover'],
+    info: "FBD Insurance — trusted Irish insurer with growing UK presence."
+  },
+  {
+    id: 24, insurer: 'Marshmallow', tier: 'Standard', logo: '/logos/marshmallow-logo.jpg', rating: 3, ratingSource: 'defaqto',
+    annualPrice: 1845.60, totalExcess: 500, voluntaryExcess: 250, compulsoryExcess: 250,
+    covered: ['Windscreen cover', 'Personal accident'],
+    addons: ['Courtesy car', 'Legal assistance'],
+    notCovered: ['Key cover', 'Misfuelling', 'Personal belongings cover'],
+    info: "App-based insurer built for new and international licence holders."
+  },
+  {
+    id: 25, insurer: 'AA Insurance', tier: 'Comprehensive', logo: '/logos/aa-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1860.00, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Courtesy car', 'Personal accident', 'Key cover'],
+    addons: ['Legal assistance', 'Breakdown cover'],
+    notCovered: ['Driving abroad cover'],
+    info: "The AA — Britain's most trusted motoring organisation. Breakdown cover available."
+  },
+  {
+    id: 26, insurer: 'MS Amlin', tier: 'Premier', logo: '/logos/ms-amlin-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1885.40, totalExcess: 200, voluntaryExcess: 50, compulsoryExcess: 150,
+    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car', 'Key cover', 'Personal accident'],
+    addons: ['Breakdown cover'],
+    notCovered: ['Misfuelling'],
+    info: "MS Amlin provides specialist motor insurance through selected brokers."
+  },
+  {
+    id: 27, insurer: 'Munich RE', tier: 'Comprehensive', logo: '/logos/munich-re-logo.svg', rating: 5, ratingSource: 'defaqto',
+    annualPrice: 1910.00, totalExcess: 300, voluntaryExcess: 150, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Key cover', 'Courtesy car', 'Personal accident'],
+    addons: ['Legal assistance', 'Breakdown cover'],
+    notCovered: [],
+    info: "Global reinsurance leader offering retail motor insurance with broad cover."
+  },
+  {
+    id: 28, insurer: 'Cornish Mutual', tier: 'Standard', logo: '/logos/cornish-mutual-logo.jpg', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1925.75, totalExcess: 250, voluntaryExcess: 100, compulsoryExcess: 150,
+    covered: ['Windscreen cover', 'Personal accident', 'Courtesy car'],
+    addons: ['Legal assistance', 'Key cover'],
+    notCovered: ['Misfuelling', 'Driving abroad cover'],
+    info: "Cornish Mutual — rural specialist with a community-focused approach."
+  },
+  {
+    id: 29, insurer: 'R&Q Accredited', tier: 'Standard', logo: '/logos/rq-accredited-logo.png', rating: 3, ratingSource: 'defaqto',
+    annualPrice: 1940.20, totalExcess: 450, voluntaryExcess: 250, compulsoryExcess: 200,
+    covered: ['Windscreen cover', 'Personal accident'],
+    addons: ['Courtesy car', 'Legal assistance'],
+    notCovered: ['Key cover', 'Misfuelling', 'Personal belongings cover'],
+    info: "R&Q Accredited provides specialist motor cover through Lloyd's of London."
+  },
+  {
+    id: 30, insurer: 'Acromas Insurance', tier: 'Comprehensive', logo: '/logos/acromas-logo.png', rating: 4, ratingSource: 'defaqto',
+    annualPrice: 1980.50, totalExcess: 200, voluntaryExcess: 50, compulsoryExcess: 150,
+    covered: ['Legal assistance', 'Windscreen cover', 'Courtesy car', 'Key cover'],
+    addons: ['Breakdown cover', 'Personal accident'],
+    notCovered: ['Misfuelling'],
+    info: "Acromas is the parent company of the AA and Saga — trusted household names."
   }
 ];
 
@@ -249,50 +249,41 @@ function parseExcess(str) {
 }
 
 function applyFilters(quotes, { voluntaryExcess, addons }) {
-  const maxVoluntary = parseExcess(voluntaryExcess);
-  const requiredAddons = Object.entries(addons || {})
-    .filter(([, v]) => v)
-    .map(([k]) => k);
+  const maxVol = parseExcess(voluntaryExcess);
+  const required = Object.entries(addons || {}).filter(([, v]) => v).map(([k]) => k);
 
   return quotes.filter(q => {
-    // Voluntary excess filter: "None" means no preference (show all)
-    // Otherwise only show quotes where the quote's voluntary excess is <= selected max
-    if (maxVoluntary > 0 && q.voluntaryExcess > maxVoluntary) return false;
-
-    // Addon filter: quote must include required addons in covered OR addons list
-    if (requiredAddons.length > 0) {
-      const allFeatures = [...q.covered, ...q.addons];
-      const hasAll = requiredAddons.every(addon => allFeatures.includes(addon));
-      if (!hasAll) return false;
+    if (maxVol > 0 && q.voluntaryExcess > maxVol) return false;
+    if (required.length > 0) {
+      const all = [...q.covered, ...q.addons];
+      if (!required.every(a => all.includes(a))) return false;
     }
-
     return true;
   });
 }
 
-// GET /api/quotes — all 30 sorted by price
 router.get('/', (req, res) => {
   const sorted = [...ALL_QUOTES].sort((a, b) => a.annualPrice - b.annualPrice);
   res.json({ quotes: sorted, total: sorted.length });
 });
 
-// POST /api/quotes/filter — filtered & sorted
 router.post('/filter', (req, res) => {
-  const {
-    voluntaryExcess = 'None',
-    addons = {},
-    protectNoClaims = 'No',
-    payment = 'Annually',
-    coverType = 'Comprehensive'
-  } = req.body;
-
+  const { voluntaryExcess = 'None', addons = {}, protectNoClaims = 'No', payment = 'Annually', coverType = 'Comprehensive' } = req.body;
   let filtered = applyFilters(ALL_QUOTES, { voluntaryExcess, addons });
   filtered.sort((a, b) => a.annualPrice - b.annualPrice);
-
   res.json({ quotes: filtered, total: filtered.length });
 });
 
-// GET /api/quotes/:id
+// Admin: update price
+router.patch('/:id/price', (req, res) => {
+  const { price } = req.body;
+  const q = ALL_QUOTES.find(q => q.id === parseInt(req.params.id));
+  if (!q) return res.status(404).json({ message: 'Quote not found' });
+  if (!price || isNaN(parseFloat(price))) return res.status(400).json({ message: 'Invalid price' });
+  q.annualPrice = parseFloat(parseFloat(price).toFixed(2));
+  res.json({ message: 'Price updated', quote: q });
+});
+
 router.get('/:id', (req, res) => {
   const q = ALL_QUOTES.find(q => q.id === parseInt(req.params.id));
   if (!q) return res.status(404).json({ message: 'Quote not found' });

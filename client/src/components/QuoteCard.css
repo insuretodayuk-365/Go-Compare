@@ -1,7 +1,7 @@
-.desktop-only { display: block; }
-.mobile-only { display: none; }
+.show-desktop-card { display: block; }
+.show-mobile-card  { display: none; }
 
-@media (max-width: 768px) {
-  .desktop-only { display: none; }
-  .mobile-only { display: block; }
+@media (max-width: 600px) {
+  .show-desktop-card { display: none; }
+  .show-mobile-card  { display: block; }
 }
