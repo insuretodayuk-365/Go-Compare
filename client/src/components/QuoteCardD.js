@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import "./QuoteCardD.css";
 import api from "../api";
 
-export default function QuoteCardD({ quote, onViewDetails, onPriceUpdate }) {
+export default function QuoteCardD({ quote, onViewDetails, onQuoteUpdate }) {
   const [editing, setEditing] = useState(false);
   const [inputVal, setInputVal] = useState(quote.annualPrice.toFixed(2));
+  const [inputValExcess, setInputValExcess] = useState(
+    quote.totalExcess.toString(),
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -21,18 +24,36 @@ export default function QuoteCardD({ quote, onViewDetails, onPriceUpdate }) {
 
   const handleSave = async () => {
     const parsed = parseFloat(inputVal);
+    const parsedExcess = parseFloat(inputValExcess);
     if (isNaN(parsed) || parsed <= 0) {
       setError("Enter a valid price");
+      return;
+    }
+    if (isNaN(parsedExcess) || parsedExcess < 0) {
+      setError("Enter a valid excess");
       return;
     }
     setSaving(true);
     setError("");
     try {
-      const res = await api.patch(`/api/quotes/${quote.id}/price`, { price: parsed });
-      onPriceUpdate && onPriceUpdate(quote.id, res.data.quote.annualPrice);
+      console.log(
+        "Saving price:",
+        parsed,
+        "excess:",
+        parsedExcess,
+        "for quote:",
+        quote.id,
+      );
+      const res = await api.patch(`/api/quotes/${quote.id}/price`, {
+        price: parsed,
+        excess: parsedExcess,
+      });
+      console.log("Response:", res.data);
+      onQuoteUpdate && onQuoteUpdate(res.data.quote);
       setEditing(false);
-    } catch {
-      setError("Failed to save. Try again.");
+    } catch (err) {
+      console.log("Save error:", err);
+      setError(err.response?.data?.message || "Failed to save. Try again.");
     } finally {
       setSaving(false);
     }
@@ -40,6 +61,7 @@ export default function QuoteCardD({ quote, onViewDetails, onPriceUpdate }) {
 
   const handleCancel = () => {
     setInputVal(quote.annualPrice.toFixed(2));
+    setInputValExcess(quote.totalExcess.toString());
     setEditing(false);
     setError("");
   };
@@ -48,19 +70,25 @@ export default function QuoteCardD({ quote, onViewDetails, onPriceUpdate }) {
     <div className="qcd-card">
       <div className="qcd-main">
         <div className="qcd-grid">
-
           {/* Insurer & Rating */}
           <div className="qcd-col-insurer">
             <img
               src={quote.logo}
               alt={quote.insurer}
               className="qcd-logo"
-              onError={(e) => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
+              onError={(e) => {
+                e.target.style.display = "none";
+                e.target.nextSibling.style.display = "flex";
+              }}
             />
-            <div className="qcd-logo-fallback" style={{ display: "none" }}>{quote.insurer}</div>
+            <div className="qcd-logo-fallback" style={{ display: "none" }}>
+              {quote.insurer}
+            </div>
             <div className="qcd-stars">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className={i < quote.rating ? "filled" : ""}>★</span>
+                <span key={i} className={i < quote.rating ? "filled" : ""}>
+                  ★
+                </span>
               ))}
             </div>
             <span className="qcd-defaqto">from defaqto</span>
@@ -73,11 +101,25 @@ export default function QuoteCardD({ quote, onViewDetails, onPriceUpdate }) {
               return (
                 <div key={f} className="qcd-feat-item">
                   {isCovered ? (
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a4731" strokeWidth="7">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#1a4731"
+                      strokeWidth="7"
+                    >
                       <path d="M20 6L9 17l-5-5" />
                     </svg>
                   ) : (
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b1adad" strokeWidth="5">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#b1adad"
+                      strokeWidth="5"
+                    >
                       <line x1="12" y1="5" x2="12" y2="19" />
                       <line x1="5" y1="12" x2="19" y2="12" />
                     </svg>
@@ -103,15 +145,33 @@ export default function QuoteCardD({ quote, onViewDetails, onPriceUpdate }) {
                     min="0"
                     value={inputVal}
                     onChange={(e) => setInputVal(e.target.value)}
-                    autoFocus
+                    placeholder="Price"
+                  />
+                </div>
+                <div className="qcd-edit-input-row">
+                  <span className="qcd-edit-sym">£</span>
+                  <input
+                    className="qcd-excess-input"
+                    type="number"
+                    step="1"
+                    min="0"
+                    value={inputValExcess}
+                    onChange={(e) => setInputValExcess(e.target.value)}
+                    placeholder="Excess"
                   />
                 </div>
                 {error && <div className="qcd-edit-error">{error}</div>}
                 <div className="qcd-edit-actions">
-                  <button className="qcd-save-btn" onClick={handleSave} disabled={saving}>
+                  <button
+                    className="qcd-save-btn"
+                    onClick={handleSave}
+                    disabled={saving}
+                  >
                     {saving ? "..." : "Save"}
                   </button>
-                  <button className="qcd-cancel-btn" onClick={handleCancel}>Cancel</button>
+                  <button className="qcd-cancel-btn" onClick={handleCancel}>
+                    Cancel
+                  </button>
                 </div>
               </div>
             ) : (
@@ -126,21 +186,32 @@ export default function QuoteCardD({ quote, onViewDetails, onPriceUpdate }) {
                   <span className="qcd-dec">.{priceDec}</span>
                   <span className="qcd-edit-icon">✎</span>
                 </div>
-                <div className="qcd-excess-pill">Total excess: £{quote.totalExcess}</div>
+                <div className="qcd-excess-pill">
+                  Total excess: £{quote.totalExcess}
+                </div>
               </>
             )}
           </div>
 
           {/* CTA */}
           <div className="qcd-col-cta">
-            <button className="qcd-btn" onClick={onViewDetails}>View Details</button>
+            <button className="qcd-btn" onClick={onViewDetails}>
+              View Details
+            </button>
           </div>
         </div>
       </div>
 
       <div className="qcd-info-bar">
         <div className="qcd-info-badge">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a4731" strokeWidth="3">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#1a4731"
+            strokeWidth="3"
+          >
             <circle cx="12" cy="12" r="10" />
             <path d="M12 16v-4M12 8h.01" />
           </svg>

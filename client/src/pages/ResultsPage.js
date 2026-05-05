@@ -276,6 +276,19 @@ export default function ResultsPage() {
                   <QuoteCardD
                     quote={quote}
                     onViewDetails={() => setSelectedQuote(quote)}
+                    onQuoteUpdate={(updatedQuote) => {
+                      console.log("Updating quote:", updatedQuote);
+                      setQuotes((prev) =>
+                        prev.map((q) =>
+                          q.id === updatedQuote.id ? updatedQuote : q,
+                        ),
+                      );
+                      setAllQuotes((prev) =>
+                        prev.map((q) =>
+                          q.id === updatedQuote.id ? updatedQuote : q,
+                        ),
+                      );
+                    }}
                   />
                 </div>
                 {/* Mobile — hidden above 600px via CSS */}
@@ -283,6 +296,19 @@ export default function ResultsPage() {
                   <QuoteCardM
                     quote={quote}
                     onViewDetails={() => setSelectedQuote(quote)}
+                    onQuoteUpdate={(updatedQuote) => {
+                      console.log("Updating quote:", updatedQuote);
+                      setQuotes((prev) =>
+                        prev.map((q) =>
+                          q.id === updatedQuote.id ? updatedQuote : q,
+                        ),
+                      );
+                      setAllQuotes((prev) =>
+                        prev.map((q) =>
+                          q.id === updatedQuote.id ? updatedQuote : q,
+                        ),
+                      );
+                    }}
                   />
                 </div>
               </div>
