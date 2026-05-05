@@ -9,7 +9,9 @@
 .qcm-top-section {
   display: flex;
   gap: 0;
-  padding: 14px 14px 10px;
+  padding: 14px 14px 0px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #d4d0c8;
 }
 
 /* Left col */
@@ -18,7 +20,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
-  min-width: 130px;
+  flex:1;
+  /* min-width: 130px; */
   padding-right: 14px;
   border-right: 1px solid #d4d0c8;
 }
@@ -212,7 +215,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  background: #f5f0e8;
+  background: #fcfcfc;
   border-top: 1px solid #d4d0c8;
   font-size: 12px;
 }
@@ -226,4 +229,4 @@
   border-radius: 4px;
   white-space: nowrap;
 }
-.qcm-info-text { margin: 0; color: #555; }
+.qcm-info-text { margin: 0; color: var(--green-dark); font-weight: 600;}
