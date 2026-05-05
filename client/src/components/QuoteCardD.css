@@ -220,8 +220,8 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #f5f0e8;
-  border-top: 1px solid #d4d0c8;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
   font-size: 12px;
   color: #555;
 }
