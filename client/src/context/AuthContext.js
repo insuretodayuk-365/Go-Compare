@@ -9,6 +9,8 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+console.log("API:", process.env.REACT_APP_API_URL);
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
