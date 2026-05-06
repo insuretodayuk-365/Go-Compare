@@ -278,15 +278,21 @@ export default function ResultsPage() {
                     onViewDetails={() => setSelectedQuote(quote)}
                     onQuoteUpdate={(updatedQuote) => {
                       console.log("Updating quote:", updatedQuote);
+
                       setQuotes((prev) =>
-                        prev.map((q) =>
-                          q.id === updatedQuote.id ? updatedQuote : q,
-                        ),
+                        [...prev]
+                          .map((q) =>
+                            q.id === updatedQuote.id ? updatedQuote : q,
+                          )
+                          .sort((a, b) => a.annualPrice - b.annualPrice),
                       );
+
                       setAllQuotes((prev) =>
-                        prev.map((q) =>
-                          q.id === updatedQuote.id ? updatedQuote : q,
-                        ),
+                        [...prev]
+                          .map((q) =>
+                            q.id === updatedQuote.id ? updatedQuote : q,
+                          )
+                          .sort((a, b) => a.annualPrice - b.annualPrice),
                       );
                     }}
                   />
@@ -298,15 +304,21 @@ export default function ResultsPage() {
                     onViewDetails={() => setSelectedQuote(quote)}
                     onQuoteUpdate={(updatedQuote) => {
                       console.log("Updating quote:", updatedQuote);
+
                       setQuotes((prev) =>
-                        prev.map((q) =>
-                          q.id === updatedQuote.id ? updatedQuote : q,
-                        ),
+                        [...prev]
+                          .map((q) =>
+                            q.id === updatedQuote.id ? updatedQuote : q,
+                          )
+                          .sort((a, b) => a.annualPrice - b.annualPrice),
                       );
+
                       setAllQuotes((prev) =>
-                        prev.map((q) =>
-                          q.id === updatedQuote.id ? updatedQuote : q,
-                        ),
+                        [...prev]
+                          .map((q) =>
+                            q.id === updatedQuote.id ? updatedQuote : q,
+                          )
+                          .sort((a, b) => a.annualPrice - b.annualPrice),
                       );
                     }}
                   />

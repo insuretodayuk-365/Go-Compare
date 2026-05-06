@@ -579,20 +579,46 @@ router.post("/filter", (req, res) => {
 
 // Admin: update price
 router.patch("/:id/price", (req, res) => {
-  const { price, excess } = req.body;
-  const q = ALL_QUOTES.find((q) => q.id === parseInt(req.params.id));
-  if (!q) return res.status(404).json({ message: "Quote not found" });
+  const { price, totalExcess } = req.body;
+
+  const q = ALL_QUOTES.find(
+    (q) => q.id === parseInt(req.params.id)
+  );
+
+  if (!q) {
+    return res.status(404).json({
+      message: "Quote not found",
+    });
+  }
+
   if (price !== undefined) {
-    if (isNaN(parseFloat(price)))
-      return res.status(400).json({ message: "Invalid price" });
-    q.annualPrice = parseFloat(parseFloat(price).toFixed(2));
+    if (isNaN(parseFloat(price))) {
+      return res.status(400).json({
+        message: "Invalid price",
+      });
+    }
+
+    q.annualPrice = parseFloat(
+      parseFloat(price).toFixed(2)
+    );
   }
-  if (excess !== undefined) {
-    if (isNaN(parseFloat(excess)))
-      return res.status(400).json({ message: "Invalid excess" });
-    q.totalExcess = parseFloat(parseFloat(excess).toFixed(0));
+
+  if (totalExcess !== undefined) {
+    if (isNaN(parseFloat(totalExcess))) {
+      return res.status(400).json({
+        message: "Invalid excess",
+      });
+    }
+
+    q.totalExcess = parseFloat(
+      parseFloat(totalExcess).toFixed(0)
+    );
   }
-  res.json({ message: "Updated", quote: q });
+
+  res.json({
+    message: "Updated",
+    quote: q,
+  });
 });
 
 router.get("/:id", (req, res) => {

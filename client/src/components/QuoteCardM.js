@@ -15,28 +15,49 @@ export default function QuoteCardM({ quote, onViewDetails, onQuoteUpdate }) {
   const priceDec = (quote.annualPrice % 1).toFixed(2).slice(2);
 
   const handleSave = async () => {
-    const parsed = parseFloat(inputVal);
-    if (isNaN(parsed) || parsed <= 0) {
-      setError("Enter a valid price");
-      return;
-    }
-    setSaving(true);
-    setError("");
-    try {
-      console.log("Saving price:", parsed, "for quote:", quote.id);
-      const res = await api.patch(`/api/quotes/${quote.id}/price`, {
-        price: parsed,
-      });
-      console.log("Response:", res.data);
-      onQuoteUpdate && onQuoteUpdate(res.data.quote);
-      setEditing(false);
-    } catch (err) {
-      console.log("Save error:", err);
-      setError(err.response?.data?.message || "Failed to save.");
-    } finally {
-      setSaving(false);
-    }
-  };
+  const parsedPrice = parseFloat(inputVal);
+  const parsedExcess = parseFloat(inputValExcess);
+
+  if (isNaN(parsedPrice) || parsedPrice <= 0) {
+    setError("Enter a valid price");
+    return;
+  }
+
+  if (isNaN(parsedExcess) || parsedExcess < 0) {
+    setError("Enter a valid excess");
+    return;
+  }
+
+  setSaving(true);
+  setError("");
+
+  try {
+    console.log("Saving data:", {
+      price: parsedPrice,
+      totalExcess: parsedExcess,
+      quoteId: quote.id,
+    });
+
+    const res = await api.patch(`/api/quotes/${quote.id}/price`, {
+      price: parsedPrice,
+      totalExcess: parsedExcess,
+    });
+
+    console.log("Response:", res.data);
+
+    onQuoteUpdate && onQuoteUpdate(res.data.quote);
+
+    setEditing(false);
+  } catch (err) {
+    console.log("Save error:", err);
+
+    setError(
+      err.response?.data?.message || "Failed to save."
+    );
+  } finally {
+    setSaving(false);
+  }
+};
 
   const handleCancel = () => {
     setInputVal(quote.annualPrice.toFixed(2));
