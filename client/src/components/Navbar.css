@@ -89,36 +89,133 @@
 
 .dropdown {
   position: absolute;
+
+  top: calc(100% + 10px);
   right: 0;
-  top: calc(100% + 8px);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-  min-width: 200px;
+
+  width: 320px;
+
+  background: #fff;
+
+  border-radius: 18px;
+
   overflow: hidden;
-  z-index: 300;
+
+  border: 1px solid #ece8e2;
+
+  box-shadow:
+    0 12px 40px rgba(0,0,0,0.12),
+    0 2px 8px rgba(0,0,0,0.06);
+
+  z-index: 999;
 }
-.dropdown-item {
-  display: block;
+
+.dropdown-user-block {
+  padding: 28px 20px 26px;
+}
+
+.dropdown-welcome {
+  color: #111;
+
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  letter-spacing: -0.2px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #ece8e2;
+}
+
+.dropdown-link-btn {
   width: 100%;
-  padding: 10px 16px;
-  text-align: left;
-  background: none;
+
   border: none;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--text-dark);
+  background: transparent;
+
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #1d1b18;
+
+  font-size: 17px;
+  font-weight: 600;
+
   cursor: pointer;
-  transition: background 0.15s;
 }
-.dropdown-item:hover { background: var(--cream); }
-.dropdown-name { font-weight: 700; color: var(--green-dark); cursor: default; }
-.dropdown-name:hover { background: none; }
-.dropdown-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+.dropdown-link-btn svg {
+  width: 18px;
+  height: 18px;
+
+  stroke: #1d1b18;
+
+  flex-shrink: 0;
+}
+
+.dropdown-footer {
+  padding: 18px 20px 22px;
+
+  color: #7b7670;
+  text-align:right;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.dropdown-signout {
+  border: none;
+  background: transparent;
+
+  padding: 0;
+  margin: 0;
+
+  color: #7b7670;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  text-decoration: underline;
+
+  cursor: pointer;
+}
 .logout { color: var(--red); }
 
 @media (max-width: 480px) {
   .navbar-inner { padding: 0 14px; }
   .nav-register { display: none; }
+}
+
+@media (max-width: 768px) {
+  .dropdown {
+    position: fixed;
+
+    top: 60px;
+    left: 0;
+    right: 0;
+
+    width: 100vw;
+    height: auto;
+
+    border-radius: 0;
+    border: none;
+
+    box-shadow: none;
+
+    overflow-y: auto;
+  }
+}
+@media (max-width: 768px) {
+  .user-btn span {
+    display: none;
+  }
+
+  .user-btn {
+    padding: 6px;
+    gap: 0;
+  }
 }

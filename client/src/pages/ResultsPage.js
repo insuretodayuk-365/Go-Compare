@@ -169,7 +169,7 @@ export default function ResultsPage() {
             <path d="M9 11l3 3L22 4" />
             <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
           </svg>
-          Cover options {Object.values(addons).filter(Boolean).length}/5
+          Refine results {Object.values(addons).filter(Boolean).length}/5
         </button>
       </div>
 
@@ -194,25 +194,30 @@ export default function ResultsPage() {
         </aside>
 
         <main className="results-main">
-          <div className="telematics-banner">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
+          <div className="addons-banner">
+            <div className="addons-banner-text">
+              Add or remove add-ons from quotes
+            </div>
+
+            <button
+              className="addons-banner-btn"
+              onClick={() => setShowMobileSidebar(true)}
             >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 8v4l3 3" />
-            </svg>
-            <span>
-              Cheapest quote for policies that track your driving:{" "}
-              <strong>Annual Price £1822.86</strong>
-            </span>
-            <label className="toggle-label">
-              <input type="checkbox" /> Include these policies
-            </label>
+              <span>
+                Add-ons {Object.values(addons).filter(Boolean).length}/5
+              </span>
+
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
           </div>
 
           {activeFilters.length > 0 && (
